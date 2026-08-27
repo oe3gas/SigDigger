@@ -115,7 +115,7 @@ function gather_dlls()
     fetch_dll libsigutils.dll
     fetch_dll suwidgets0.dll
     fetch_dll libportaudio.dll
-    fetch_dll libxml2-2.dll
+    for f in /mingw64/bin/libxml2-*.dll; do fetch_dll "$(basename "$f")"; done
     fetch_dll libsndfile-1.dll
     fetch_dll libSoapySDR.dll
     fetch_dll librtlsdr.dll
