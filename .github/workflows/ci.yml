@@ -10,18 +10,6 @@ env:
 
 jobs:
   build-windows:
-    runs-on: windows-latestname: CI
-
-on:
-  push:
-    branches: [ master ]
-  workflow_dispatch:
-
-env:
-  BUILD_TYPE: Release
-
-jobs:
-  build-windows:
     runs-on: windows-latest
     defaults:
       run:
@@ -41,56 +29,7 @@ jobs:
       - name: Build SoapyIcom7610 (MinGW)
         run: |
           pacman -S --noconfirm --needed zip unzip
-          curl -L -o /tmp/ftd3xx.zip https://github.com/oe3gas/SigDigger/releases/download/deps/ftd3xx-win64.zip
-          mkdir -p /tmp/ftd3xx
-          unzip -o /tmp/ftd3xx.zip -d /tmp/ftd3xx
-          git clone --depth 1 https://github.com/oe3gas/SoapyIcom7610 /tmp/SoapyIcom7610
-          cd /tmp/SoapyIcom7610
-          cp CMakeLists-mingw.txt CMakeLists.txt
-          cmake -B build -DCMAKE_BUILD_TYPE=Release -DFTD3XX_DIR=/tmp/ftd3xx
-          cmake --build build
-          ls -l build/SoapyIcom7610.dll
-
-      - name: Inject IC-7610 module into ZIP
-        run: |
-          cd Scripts
-          ZIP=$(ls SigDigger-*.zip)
-          mkdir repack && cd repack
-          unzip -q "../$ZIP"
-          APPDIR=$(dirname "$(find . -name SigDigger.exe | head -1)")
-          MODDIR=$(find . -type d -name "modules0.8" | head -1)
-          if [ -z "$MODDIR" ]; then MODDIR="$APPDIR"; fi
-          cp /tmp/SoapyIcom7610/build/SoapyIcom7610.dll "$MODDIR/"
-          cp /tmp/ftd3xx/FTD3XX.dll "$APPDIR/"
-          rm "../$ZIP"
-          zip -q -r "../$ZIP" .
-          cd ..
-          rm -rf repack
-
-      - name: Archive .ZIP files
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-latest-zip
-          path: Scripts/SigDigger-*.zipdein
-    defaults:
-      run:
-        shell: msys2 {0}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install dependencies
-        uses: "./.github/actions/win32deps"
-
-      - name: Build & Distribute (SigDigger)
-        run: |
-          cd Scripts
-          chmod a+x dist-mingw32.sh
-          BUILDTYPE=Release BRANCH=master ./dist-mingw32.sh
-          cd ..
-
-      - name: Build SoapyIcom7610 (MinGW)
-        run: |
-          pacman -S --noconfirm --needed zip unzip
-          curl -L -o /tmp/ftd3xx.zip https://github.com/oe3gas/SigDigger/releases/download/deps/ftd3xx-win64.zip
+          curl -L -o /tmp/ftd3xx.zip https://github.com/DEIN-NAME/SigDigger/releases/download/deps/ftd3xx-win64.zip
           mkdir -p /tmp/ftd3xx
           unzip -o /tmp/ftd3xx.zip -d /tmp/ftd3xx
           git clone --depth 1 https://github.com/oe3gas/SoapyIcom7610 /tmp/SoapyIcom7610
