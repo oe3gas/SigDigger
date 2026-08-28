@@ -29,7 +29,7 @@ jobs:
       - name: Build SoapyIcom7610 (MinGW)
         run: |
           pacman -S --noconfirm --needed zip unzip
-          curl -L -o /tmp/ftd3xx.zip https://github.com/DEIN-NAME/SigDigger/releases/download/deps/ftd3xx-win64.zip
+          curl -fL -o /tmp/ftd3xx.zip https://github.com/oe3gas/SigDigger/releases/download/deps/ftd3xx-win64.zip
           mkdir -p /tmp/ftd3xx
           unzip -o /tmp/ftd3xx.zip -d /tmp/ftd3xx
           git clone --depth 1 https://github.com/oe3gas/SoapyIcom7610 /tmp/SoapyIcom7610
