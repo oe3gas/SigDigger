@@ -32,7 +32,7 @@ jobs:
           curl -fL -o /tmp/ftd3xx.zip https://github.com/oe3gas/SigDigger/releases/download/deps/ftd3xx-win64.zip
           mkdir -p /tmp/ftd3xx
           unzip -o /tmp/ftd3xx.zip -d /tmp/ftd3xx
-          git clone --depth 1 https://github.com/oe3gas/SoapyIcom7610 /tmp/SoapyIcom7610
+          git clone --depth 1 https://github.com/oe3gas/SoapyIC7610 /tmp/SoapyIcom7610
           cd /tmp/SoapyIcom7610
           cp CMakeLists-mingw.txt CMakeLists.txt
           cmake -B build -DCMAKE_BUILD_TYPE=Release -DFTD3XX_DIR=/tmp/ftd3xx
